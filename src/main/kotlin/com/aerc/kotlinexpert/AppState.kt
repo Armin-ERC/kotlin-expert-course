@@ -1,3 +1,5 @@
+package com.aerc.kotlinexpert
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,3 +1,5 @@
+package com.aerc.kotlinexpert
+
 import androidx.compose.runtime.MutableState
 
 fun <T> MutableState<T>.update(produceValue: (T) -> T) {

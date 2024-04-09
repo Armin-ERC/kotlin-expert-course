@@ -1,6 +1,7 @@
-import Note.Type
+package com.aerc.kotlinexpert
+
+import com.aerc.kotlinexpert.Note.Type
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class Note(
@@ -13,18 +14,14 @@ data class Note(
     }
 }
 
-fun getNotes() : Flow<List<Note>> = flow {
+fun getNotes() = flow {
     delay(2000)
 
-    var notes = emptyList<Note>()
-
-    (1..10).forEach {
-        notes = notes + Note(
+    val notes = (1..10).map {
+        Note(
             title = "Title $it", description = "Description $it",
             if (it % 3 == 0) Type.AUDIO else Type.TEXT
         )
-
-        emit(notes)
-        delay(500)
     }
+    emit(notes)
 }
