@@ -25,6 +25,17 @@ fun FiltersAction(
     onFilterClick: (Filter) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    @Composable
+    infix fun Filter.toMenuItem(label : String){
+        DropdownMenuItem(onClick = {
+            expanded = false
+            onFilterClick(this)
+        }) {
+            Text(label)
+        }
+    }
+
     IconButton(onClick = {
         expanded = true
     }) {
@@ -34,25 +45,9 @@ fun FiltersAction(
         )
 
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onFilterClick(Filter.All)
-            }) {
-                Text("All")
-            }
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onFilterClick(Filter.ByType(Note.Type.TEXT))
-            }
-            ) {
-                Text("Text")
-            }
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onFilterClick(Filter.ByType(Note.Type.AUDIO))
-            }) {
-                Text("Audio")
-            }
+            Filter.All toMenuItem "All"
+            Filter.ByType(Note.Type.TEXT) toMenuItem "Text"
+            Filter.ByType(Note.Type.AUDIO) toMenuItem "Audio"
         }
     }
 }
