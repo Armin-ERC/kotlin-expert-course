@@ -2,7 +2,9 @@ package com.aerc.kotlinexpert.ui.screens.home
 
 import com.aerc.kotlinexpert.data.Filter
 import com.aerc.kotlinexpert.data.Note
-import com.aerc.kotlinexpert.data.getNotes
+import com.aerc.kotlinexpert.remote.notesClient
+import io.ktor.client.call.*
+import io.ktor.client.request.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,9 +19,8 @@ object HomeState {
     fun loadNotes(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             _state.value = UiState(loading = true)
-            getNotes().collect {
-                _state.value = UiState(notes = it)
-            }
+            val response = notesClient.request("http://localhost:8080/notes")
+            _state.value = UiState(notes = response.body())
         }
     }
 
